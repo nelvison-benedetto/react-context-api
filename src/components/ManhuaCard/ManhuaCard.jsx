@@ -3,7 +3,7 @@ import ButtonBuy from '../Buttons/ButtonBuy'
 import ButtonTrash from '../Buttons/ButtonTrash';
 import { Link } from 'react-router-dom';
 
-export default function ManhuaCard({data, onTrashManga}){
+export default function ManhuaCard({data, onTrashManga, baseApiUrl}){
 
     // console.log(process.env.REACT_APP_TARGET_HOST); errori quando usao la env var
     // console.log(process.env.REACT_APP_TARGET_PORT);
@@ -18,7 +18,7 @@ export default function ManhuaCard({data, onTrashManga}){
                 <div className="d-flex flex-column gap-2 card-content">
                     <Link to={`/manga/${data.id}`}>
                         <div className="inner-image bg-blue2 d-flex justify-content-center align-items-center">
-                            <img src={`http://localhost:3001/${data.file}`} alt="cover image" className="img-fluid"/>  {/*better env vars x link localhost*/}
+                            <img src={`${baseApiUrl}/${data.file}`} alt="cover image" className="img-fluid"/>  {/*better env vars x link localhost*/}
                         </div>
                         <h1 className="title">{data.title}</h1>
                         <p>{data.content}</p>

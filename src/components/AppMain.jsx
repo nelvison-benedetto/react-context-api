@@ -1,16 +1,17 @@
 //AppMain.jsx
-import { useState, useEffect} from 'react'
+import { useState, useEffect, useContext} from 'react'
 import ManhuaCard from './ManhuaCard/ManhuaCard'
+import GlobalContext from '../contexts/GlobalContext';
 
 export default function AppMain(){
-
-
   
   // const initialTasks = ['Learn JS','Learn PHP','Learn Laravel','Learn Python','Learn C#','Learn C++','Learn AI'];
   // const [tasks, setTasks] = useState(initialTasks);  //tasks is the array, setTasks to edit it, initialTasks initial data
   // const [newTask, setNewTask] = useState('');
   // const [filteredTasks, setFilteredTasks] = useState(tasks);
 
+  const baseApiUrl = 'http://localhost:3001';  //PROPS DRILLING  pass this var using props to other comps
+  const {api_url_baseGlobal} = useContext(GlobalContext);  //CONTEXT API get global var initialized in App.jsx !
   const availableTags = ['Isekai', 'Mecha', 'Slice of Life', 'Romantic Comedy', 'Fantasy'];
 
   const initialFormData = {  //the key names (i.e. "title") must be exactly the same in the html (i.e. <...name="title">) to link!
@@ -55,7 +56,7 @@ export default function AppMain(){
     setMangas(newMangas_local);
   }
 
-  function fetchData(url = 'http://localhost:3001/something'){
+  function fetchData(url = `${baseApiUrl}/something`){
     fetch(url)
       .then(res => res.json())
       .then(response =>{
@@ -167,7 +168,7 @@ export default function AppMain(){
     // console.log('Type of file:', typeof formDataToSend.file);
     // console.log('Is it a File object?', formDataToSend.file instanceof File);
 
-    fetch('http://localhost:3001/something', {
+    fetch(`${baseApiUrl}/something`, {
       method: 'POST',
       // body: JSON.stringify(newManga),  //use a Form Data x Files!!
       // headers: {
@@ -352,7 +353,7 @@ export default function AppMain(){
         </form>
 
         <section className='row row-cols-1 row-cols-sm-1 row-cols-md-2 row-cols-lg-3 g-3 mb-3'>
-          {filteredMangas.map((item,index)=><ManhuaCard key={item.id} data={item} onTrashManga={handleTrashManga}/>)}  {/*la key serve a map for track*/}
+          {filteredMangas.map((item,index)=><ManhuaCard key={item.id} data={item} onTrashManga={handleTrashManga} baseApiUrl={baseApiUrl}/>)}  {/*la key serve a map for track*/}
         </section>
 
       </div>
